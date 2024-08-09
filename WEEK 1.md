@@ -74,12 +74,11 @@
 https://play.picoctf.org/practice/challenge/160?originalEvent=34&page=1&search=arm
 -  [x] Root Me - "ELF x86 - Basic" : ELF 파일 구조와 기본적인 리버싱 기술을 테스트
 https://www.root-me.org/en/Challenges/Cracking/ELF-x86-Basic
-- [x] Reversing.Kr - "Easy Crackme" :
+- [x] Reversing.Kr - "Easy Crackme" http://reversing.kr/challenge.php
 - [x] CTFlearn - "Simple bof" : 스택의 동작을 이해하고 간단한 버퍼 오버플로우를 익히는 문제
 https://ctflearn.com/challenge/1010
-- [ ] http://reversing.kr/challenge.php
-- [ ] HackThisSite - "Realistic 2" : 간단한 리버싱 문제로, 문자열 패치와 관련https://www.hackthissite.org/missions/realistic/2/
-- [ ] pwnable.kr - "fd" : 파일 디스크립터와 리눅스 시스템 콜을 이해하는 간단한 문제
+- [x] HackThisSite - "Realistic 2" : 간단한 리버싱 문제로, 문자열 패치와 관련 https://www.hackthissite.org/missions/realistic/2/
+- [x] pwnable.kr - "fd" : 파일 디스크립터와 리눅스 시스템 콜을 이해하는 간단한 문제
 https://pwnable.kr/play.php
 - [ ] OverTheWire - "Narnia0" : 버퍼 오버플로우의 기초를 다루는 문제로, 스택의 동작을 이해
 https://overthewire.org/wargames/narnia/
@@ -297,3 +296,99 @@ pbVar2 + 2 해서 pbVar2가 7번째 입력한 글자를 가리키게 함.
 - 리틀 엔디안 방식으로 저장되므로, 0x67616c66로 덮어씌우기 위해 flag를 입력해야함
 
 <br><br>
+
+## 5. HackThisSite - "Realistic 2"
+https://www.hackthissite.org/missions/realistic/2/
+
+홈페이지 소스 확인 > update.php > sqli 
+
+<br><br>
+
+## 6. pwnable.kr - "fd" 
+파일 디스크립터: 파일을 대표하는 0과 양수인 정수값. 파일 접근 시 사용.
+> 할당되어 있는 파일 디스크립터  
+> fd 0: stdin  
+> fd 1: stdout  
+> fd 2: stderr  
+
+
+```fd.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+char buf[32];
+int main(int argc, char* argv[], char* envp[]){
+        if(argc<2){
+                printf("pass argv[1] a number\n");
+                return 0;
+        }
+        int fd = atoi( argv[1] ) - 0x1234;
+        int len = 0;
+        len = read(fd, buf, 32);
+        if(!strcmp("LETMEWIN\n", buf)){
+                printf("good job :)\n");
+                system("/bin/cat flag");
+                exit(0);
+        }
+        printf("learn about Linux file IO\n");
+        return 0;
+
+}
+```
+
+- `int fd = atoi( argv[1] ) - 0x1234;`
+  - 첫번째 인자값(argv[1])으로 fd를 초기화
+  - atoi(): 문자열을 숫자로 변환
+  - ex. `atoi("1234") // 1234`
+- `len = read(fd, buf, 32)`
+  - 함수원형: ssize_t read(int fd, void *buf, size_t nbytes) 
+  - fd에서 nbytes만큼 읽어서 buf에 저장
+  - 성공시 byte 수 반환, 실패시 -1 반환
+
+
+처음에는 별 생각 없이 'LETMEWIN\n' 를 인자로 전달하며 왜 안되나 고민함.  
+코드 잘 읽어보니 argv[1]는 fd를 초기화할뿐, buf에 들어가지 않는다.  
+
+buf에 'LETMEWIN\n' 를 넣기 위해서 위에서 설명한 fd 0(stdin)을 전달해야 한다.  
+그럼 scanf() 함수 사용하는 것처럼 입력을 받게되고, 해당 입력값이 buf에 들어가게 된다.
+
+정답: fd를 0으로 만들기 위해 argv[1]에 4660 전달 > LETMEWIN 입력  
+(atoi() 함수가 문자열에 있는 10진수를 int형으로 반환하는 함수이기 때문에 10진수로 변환 필요함)
+
+![WEEK1-fd](./img/WEEK1-문제풀이-6png.png)
+
+<br><br>
+
+## 7. OverTheWire - "Narnia0"
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+    long val=0x41414141;
+    char buf[20];
+
+    printf("Correct val's value from 0x41414141 -> 0xdeadbeef!\n");
+    printf("Here is your chance: ");
+    scanf("%24s",&buf);
+
+    printf("buf: %s\n",buf);
+    printf("val: 0x%08x\n",val);
+
+    if(val==0xdeadbeef){
+        setreuid(geteuid(),geteuid());
+        system("/bin/sh");
+    }
+    else {
+        printf("WAY OFF!!!!\n");
+        exit(1);
+    }
+
+    return 0;
+}
+```
+
+버퍼크기 20, val 값을 0xdeadbeef로 덮어씌우기
+- aaaaaaaaaaaaaaaaaaaa\xef\xbe\xad\xde
+- 
