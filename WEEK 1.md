@@ -12,7 +12,7 @@
 
 ## 올리 디버거 view
 
-![ollydbg_view](./img/WEEK1-ollydbg_view.png)
+![ollydbg_view](./img/WEEK1/WEEK1-ollydbg_view.png)
 
 <br>
 
@@ -63,7 +63,7 @@
 - 빅 엔디언: 데이터 저장 시 순차적으로 저장
 - 리틀 엔디언: 데이터 저장 시 역순으로 저장
 
-![WEEK1-리틀엔디안](./img/WEEK1-리틀엔디안png.png)
+![WEEK1-리틀엔디안](./img/WEEK1/WEEK1-리틀엔디안png.png)
 
 <br>
 
@@ -85,7 +85,7 @@
 > EBP 레지스터는 항상 현 스택에서 가장 높은 주소값을 가짐. 
 > ESP 레지스터는 가장 낮은 주소값을 가짐.
 
-![스택](./img/WEEK1-스택.png)
+![스택](./img/WEEK1/WEEK1-스택.png)
 - 우리가 알고있던 스택 이미지는 뒤집힌 모습.
 
 <br>
@@ -129,7 +129,7 @@ CPU가 처리할 명령어의 주소를 나타내는 레지스터. CPU는 EIF에
 <br>
 
 ### 스택의 특징
-![WEEK-1_스택2](./img/WEEK1-스택2.png)
+![WEEK-1_스택2](./img/WEEK1/WEEK1-스택2.png)
 
 - 프로세스에서 스택 포인터(ESP)의 초기값은 스택 Bottom 쪽.  
 - PUSH 명령에 의해 값 추가 시 ESP는 스탁 Top을 향해 움직임  
