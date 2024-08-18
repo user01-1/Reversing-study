@@ -141,6 +141,7 @@ NT Header 구조체 `IMAGE_NT_HEADERS`
 
 #### 4. PE Header - Section Header
 ![alt text](./img/WEEK2/WEEK-2-SecHeader.png)
+
 각 섹션의 속성을 정의한 헤더.  
 섹션 별 `IMAGE_SECTION_HEADER` 구조체 존재함
 
@@ -237,43 +238,43 @@ PE 로더가 PE 파일을 메모리에 로딩할 때, EAT에 기록된 API 이�
 
 ![WEEK2-EAT2](./img/WEEK2/WEEK-2-EAT2png.png)
 
-**[함수시작주소 찾는 과정]**
+**[함수시작주소 찾는 과정]**  
 → GetProcAddress('함수명') 사용 > AddressOfNames 멤버 통해 함수 이름 배열에서 함수명 찾기 > AddressOfNameOrdinals 멤버 통해 ordinal 배열에서 ordinal 값 찾기 > AddressOfFunctions 멤버 통해 함수 주소 배열(EAT) 이동 후 ordinal을 인덱스로하여 함수 시작주소 획득
 
 <br>
 
-#### 2. 원하는 함수명 찾기 (shell32.dll)
+#### 2. 원하는 함수명 찾기 (shell32.dll)  
 책에서는 HxD로 하나하나 확인했으나, 나는 PEView보며 RVA to RAW만 확인해봄
 
-**1. GetProcAddress('Control_RunDLL')**
+**1. GetProcAddress('Control_RunDLL')**  
 `Control_RunDLL` 함수의 시작주소를 찾기 위해 `AddressOfNames` 멤버에 접근한다.
 - 멤버의 RVA = 561BA8
 - RAW = 00560FA8
 ![WEEK2-EATTEST1](./img/WEEK2/WEEK-2-EAT_TEST1.png)
 
-**2. 함수명 찾기**
+**2. 함수명 찾기**  
 EXPORT Name Pointer Table의 시작주소가 맞다. 이곳에서 `Control_RunDLL` 함수명을 찾는다.  
 배열 인덱스는 0112
 ![WEEK2-EATTEST2](./img/WEEK2/WEEK-2-EAT_TEST2.png)
 
-**3. Ordinal 배열**
+**3. Ordinal 배열**  
 `Control_RunDLL` 함수의 Ordinal 값을 알아내기 위해 `AddressOfNameOrdinals` 멤버에 접근한다.
 - 멤버의 RVA = 0056231C
 - RAW = 0056171C
 ![WEEK2-EATTEST3](./img/WEEK2/WEEK-2-EAT_TEST3.png)
 
-**4. ordinal**
+**4. ordinal**   
 인덱스 값 0112을 배열에 적용하면 Ordinal(10)을 구할 수 있다. 
 - AddressOfNameOrdinals[index] = ordinal (index = 0112, ordinal = 0112)
 ![WEEK2-EATTEST4](./img/WEEK2/WEEK-2-EAT_TEST4.png)
 
-**5. EAT에서 함수 시작주소 찾기**
+**5. EAT에서 함수 시작주소 찾기**  
 ordinal을 인덱스로 함수 시작주소를 찾자. IMAGE_EXPORT_DIRECTORY에서 `AddressOfFunctions` 멤버 주소 확인 후 접근
 - 멤버의 RVA = 0055FC68
 - RAW = 0055F068
 ![WEEK2-EATTEST5](./img/WEEK2/WEEK-2-EAT_TEST5.png)
 
-**6. `Control_RunDLL` 함수 주소**
+**6. `Control_RunDLL` 함수 주소**  
 - AddressOfFunction[ordinal] = RVA (ordinal = 0112, RVA = 002A19E0)
 ![WEEK2-EATTEST6](./img/WEEK2/WEEK-2-EAT_TEST6.png)
 
