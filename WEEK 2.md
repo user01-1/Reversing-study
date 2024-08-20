@@ -146,9 +146,9 @@ NT Header 구조체 `IMAGE_NT_HEADERS`
 섹션 별 `IMAGE_SECTION_HEADER` 구조체 존재함
 
 - VirtualSize: 메모리에서 섹션이 차지하는 크기
-- VirtualAddress: 메모리에서 섹션의 시작 주소(RVA)
+- **VirtualAddress**: 메모리에서 섹션의 시작 주소(RVA)
 - SizeOfRawData: 파일에서 섹션이 차지하는 크기
-- PointerToRawData: 파일에서 섹션의 시작 주소
+- **PointerToRawData**: 파일에서 섹션의 시작 주소
 - Characteristics: 섹션 속성
 
 > **※ Section의 역할**

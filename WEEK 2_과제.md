@@ -6,13 +6,8 @@
 
 ## 1. Dreamhack - basic-rev2
 
-![revbasic2-1](./img/WEEK2/WEEK-2-revbasic2-1.png)
-- 조건문은 sub_140001000()함수 반환값이 참이어야 함. 진입
+저작권문제로 [dreamhack 풀이](https://dreamhack.io/wargame/writeups/19899)에 작성함
 
-![revbasic2-2](./img/WEEK2/WEEK-2-revbasic2-2.png)
-- for문 : 18번 루프를 돌고 있음. ac[4*i] 와 매개변수 a1를 비교
-- 만약 틀리면 0을 반환
-- ac[]를 확인해보면 'Comp4re_the_arr4y' 문자열이 저장되어 있으며, 4*i 해주는 이유는 4byte 단위로 저장되어 있기 때문으로 추측됨
 
 <br>
 
