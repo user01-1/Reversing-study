@@ -1,7 +1,16 @@
-# WEEK 3 과제
+# WEEK 3 
+
+과제
 - [x] reversing\.kr - Easy Unpack
 - [x] Dreamhack - Simple Crack Me
-- [ ] Dreamhack - Small Counter
+- [x] Dreamhack - Small Counter
+
+과제 외
+- [x] Dreamhack - rev-basic-4
+- [x] Dreamhack - rev-basic-6
+- [x] Dreamhack - rev-basic-8
+
+<br>
 
 ## reversing\.kr - Easy Unpack
 
@@ -62,3 +71,18 @@ todo: Find the OEP
 todo: flag_gen() 함수 실행하기
 
 저작권문제로 [dreamhack 풀이](https://dreamhack.io/wargame/writeups/19897)에 작성함
+
+<br>
+
+## Dreamhack - rev-basic-4
+저작권문제로 [dreamhack 풀이](https://dreamhack.io/wargame/writeups/19925)에 작성함
+
+<br>
+
+## Dreamhack - rev-basic-6
+저작권문제로 [dreamhack 풀이](https://dreamhack.io/wargame/writeups/19936)에 작성함
+
+<br>
+
+## Dreamhack - rev-basic-8
+저작권문제로 [dreamhack 풀이](https://dreamhack.io/wargame/writeups/19956)에 작성함
